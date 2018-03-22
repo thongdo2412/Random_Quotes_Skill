@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-app_name='eatme'
+app_name='randomquotes'
 aws_region=us-east-1
-s3_bucket=knn-lambda-us-east-1
+s3_bucket=thongdo-lambda-us-east-1
 
 rm -rf dist
 

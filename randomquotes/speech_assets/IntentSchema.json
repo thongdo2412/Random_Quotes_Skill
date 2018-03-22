@@ -1,0 +1,34 @@
+{
+    "interactionModel": {
+        "languageModel": {
+            "invocationName": "random quotes",
+            "intents": [
+                {
+                    "name": "RandomQuotesIntent",
+                    "slots": [],
+                    "samples": [
+                        "tell me a random quote",
+                        "tell me a quote",
+                        "say a quote to me",
+                        "give me a quote",
+                        "give me a random quote",
+                        "provide a quote"
+                    ]
+                },
+                {
+                    "name": "AMAZON.HelpIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.StopIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.CancelIntent",
+                    "samples": []
+                }
+            ],
+            "types": []
+        }
+    }
+}

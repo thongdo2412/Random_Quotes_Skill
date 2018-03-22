@@ -1,27 +1,42 @@
+import json
+import boto3
+import requests
+import os
+import yaml
+
 from alexa_skill_kit import AlexaSkillKit
 from forismatic import Forismatic
+from pathlib import Path
 
-ask = AlexaSkillKit()
+with Path.cwd().joinpath('randomquotes/script.yml').open() as f: script = yaml.load(f)
+
+ask = AlexaSkillKit(app_id='amzn1.ask.skill.370ea4e5-efc0-4f4d-950c-41bfa48e00d0', requires_permission=True)
 
 @ask.on_launch
 def launch():
-    return ask.success(message='Hello, welcome to Random Quotes skill! What quote do you want me to tell you? You could say Hey tell me a random quote.')
+    return ask.success(message=script['welcome'])
 
 @ask.on_intent
 def intent():
-    return ask.success(message='I got it!', card_title='Card title shows up on Alexa app', card_content='content')
+    fori = Forismatic()
+    q = fori.get_quote()
+    answer = script['answer_speech'].format(quote=q.quote,author=q.author)
+    card_title = script['answer_card_title'].format(author=q.author)
+    card_content script['answer_card_content'].formdat(quote=q.quote,author=q.author)
+
+    return ask.success(message=answer,message_reprompt=script['answer_repeat'], card_title=card_title, card_content=card_content)
 
 @ask.on_help
 def help():
-    return ask.success(message='You could say Hey tell me a random quote.', message_reprompt='This message will play again after a while')
+    return ask.success(message=script['help'], message_reprompt=script['help_repeat'])
 
 @ask.on_session_ended
 def session_ended():
-    return ask.success(message='good bye!')
+    return ask.success(message=script['bye'])
 
 @ask.on_stop
 def stop():
-    return ask.success(message='good bye!')
+    return ask.success(message=script['bye'])
 
 @ask.on_trigger
 def main(event, context):

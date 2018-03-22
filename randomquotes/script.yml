@@ -1,0 +1,27 @@
+welcome: |
+  Welcome to Random Quotes. The skill will tell you a random quote. You can say: Tell me a random quote.
+
+welcome_repeat: |
+  You can also say: random quote
+
+help: |
+  Random Quotes will tell you a random quotes by great people in history.
+  You can say: Alexa, ask Random quotes for a quote?
+
+help_repeat: |
+  To get started, you can say: Alexa, ask Random quotes for a quote?
+
+answer_speech: |
+  {quote} by {author}.
+  Again, it's {quote} by {author}. Say next for another random quote.
+
+answer_card_title: |
+  A quote by {author}
+
+answer_card_content: |
+  {quote} by {author}
+
+answer_repeat: |
+  Say next for next random quote, or stop to end.
+
+bye: Goodbye, I hope you learned new quotes for today!
