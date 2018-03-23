@@ -5,7 +5,7 @@ import os
 import yaml
 
 from alexa_skill_kit import AlexaSkillKit
-from forismatic import Forismatic
+from randomquotes import Forismatic
 from pathlib import Path
 
 with Path.cwd().joinpath('randomquotes/script.yml').open() as f: script = yaml.load(f)
@@ -22,7 +22,7 @@ def intent():
     q = fori.get_quote()
     answer = script['answer_speech'].format(quote=q.quote,author=q.author)
     card_title = script['answer_card_title'].format(author=q.author)
-    card_content script['answer_card_content'].formdat(quote=q.quote,author=q.author)
+    card_content = script['answer_card_content'].format(quote=q.quote,author=q.author)
 
     return ask.success(message=answer,message_reprompt=script['answer_repeat'], card_title=card_title, card_content=card_content)
 

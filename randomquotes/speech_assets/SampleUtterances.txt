@@ -2,3 +2,4 @@ RandomQuotesIntent tell me a random quote
 RandomQuotesIntent tell me a quote
 RandomQuotesIntent give me a random quote
 RandomQuotesIntent random quote
+RandomQuotesIntent for a random quote
