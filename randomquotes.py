@@ -4,13 +4,13 @@ import requests
 import os
 import yaml
 
-from alexa_skill_kit import AlexaSkillKit
+from randomquotes import AlexaSkillKit
 from randomquotes import Forismatic
 from pathlib import Path
 
 with Path.cwd().joinpath('randomquotes/script.yml').open() as f: script = yaml.load(f)
 
-ask = AlexaSkillKit(app_id='amzn1.ask.skill.370ea4e5-efc0-4f4d-950c-41bfa48e00d0', requires_permission=True)
+ask = AlexaSkillKit(app_id='amzn1.ask.skill.370ea4e5-efc0-4f4d-950c-41bfa48e00d0')
 
 @ask.on_launch
 def launch():
@@ -41,7 +41,7 @@ def stop():
 @ask.on_trigger
 def main(event, context):
 # This is the main entry of your Lambda function
-
+    print(event['request'])
     if ask.launch():
         return launch()
     elif ask.intent():
@@ -54,6 +54,8 @@ def main(event, context):
         return stop()
 
 if __name__ == '__main__':
-    # fake event for local development. Look into tests/data/*.json for fake json files
-    event = {}
+    # fake event for local development. Look into test/data/*.json for fake json files
+    test_file = 'test/launch.json'
+    with open(test_file, 'r') as f:
+        event = json.load(f)
     main(event=event, context={})
