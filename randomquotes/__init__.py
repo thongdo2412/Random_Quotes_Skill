@@ -97,8 +97,18 @@ class Forismatic(object):
 
         if response.status_code == 200:
             # Decoding JSON and fill Quote, if HTTP responce is OK
-            retrieved_data = json.loads(response.text)
-            return Quote(data=retrieved_data)
+            try:
+                print(response.json())
+                return Quote(data=response.json())
+            except:
+                print(response.json())
+                return Quote(
+                    data={
+                        "quoteText":"blank",
+                        "quoteAuthor":"blank",
+                        "senderName":"",
+                        "senderLink":""
+                        })
         else:
             return None
 

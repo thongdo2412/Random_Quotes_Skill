@@ -20,7 +20,8 @@ answer_card_title: |
   A quote by {author}
 
 answer_card_content: |
-  {quote} - {author}
+  {quote} 
+  - {author}
 
 answer_repeat: |
   Again, it's {quote} by {author}. Say next for next random quote, or exit to end.
