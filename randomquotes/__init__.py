@@ -115,7 +115,6 @@ class AlexaSkillKit:
 
     def init(self, event, script_path='randomquotes/script.yml'):
         self.event = event
-        print(event)
         request = event['request']
         session = event['session']
         context = event['context']
@@ -130,10 +129,10 @@ class AlexaSkillKit:
 
         if 'intent' in request:
             self.intent_name = request['intent']['name']
-            self.slots = request['intent']['slots']
+            # self.slots = request['intent']['slots']
         else:
             self.intent_name = False
-            self.slots = False
+            # self.slots = False
 
         with Path.cwd().joinpath(script_path).open() as f:
             self.script = yaml.load(f)
@@ -160,7 +159,7 @@ class AlexaSkillKit:
     def on_trigger(self, f):
         @wraps(f)
         def wrapper(*args, **kwargs):
-            self.init(event=kwargs.get('event'))
+            self.init(event=args[0])
             valid = self._validate()
             if not valid:
                 raise VerificationError('Failed validation.')
@@ -258,7 +257,6 @@ class AlexaSkillKit:
                 'request_id': self.request_id,
                 'date': self.timestamp,
                 'user_id': self.user_id,
-                'device_id': self.device_id,
                 'event': self.event,
                 # 'card': kwargs.get('card', {})
             }

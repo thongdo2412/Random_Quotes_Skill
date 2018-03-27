@@ -14,17 +14,20 @@ ask = AlexaSkillKit(app_id='amzn1.ask.skill.370ea4e5-efc0-4f4d-950c-41bfa48e00d0
 
 @ask.on_launch
 def launch():
-    return ask.success(message=script['welcome'])
+    return ask.success(message=script['welcome'],message_reprompt=script['welcome_repeat'])
 
 @ask.on_intent
 def intent():
     fori = Forismatic()
     q = fori.get_quote()
+    if not q.author:
+        q.author = 'Unknown'
     answer = script['answer_speech'].format(quote=q.quote,author=q.author)
+    answer_repeat = script['answer_repeat'].format(quote=q.quote,author=q.author)
     card_title = script['answer_card_title'].format(author=q.author)
     card_content = script['answer_card_content'].format(quote=q.quote,author=q.author)
 
-    return ask.success(message=answer,message_reprompt=script['answer_repeat'], card_title=card_title, card_content=card_content)
+    return ask.success(message=answer,message_reprompt=answer_repeat, card_title=card_title, card_content=card_content)
 
 @ask.on_help
 def help():
@@ -38,10 +41,14 @@ def session_ended():
 def stop():
     return ask.success(message=script['bye'])
 
+@ask.on_cancel
+def cancel():
+    return ask.success(message=script['bye'])
+
 @ask.on_trigger
 def main(event, context):
 # This is the main entry of your Lambda function
-    print(event['request'])
+    
     if ask.launch():
         return launch()
     elif ask.intent():
@@ -58,4 +65,4 @@ if __name__ == '__main__':
     test_file = 'test/launch.json'
     with open(test_file, 'r') as f:
         event = json.load(f)
-    main(event=event, context={})
+    main(event, {})
