@@ -48,17 +48,17 @@ def cancel():
 @ask.on_trigger
 def main(event, context):
 # This is the main entry of your Lambda function
-    
+
+    if ask.stop() or ask.cancel():
+        return stop()
+    if ask.session_ended():
+        return session_ended()
+    if ask.help():
+        return help()
     if ask.launch():
         return launch()
-    elif ask.intent():
+    if ask.intent():
         return intent()
-    elif ask.session_ended():
-        return session_ended()
-    elif ask.help():
-        return help()
-    elif ask.stop() or ask.cancel():
-        return stop()
 
 if __name__ == '__main__':
     # fake event for local development. Look into test/data/*.json for fake json files

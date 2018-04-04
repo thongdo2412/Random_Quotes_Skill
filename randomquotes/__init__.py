@@ -21,7 +21,8 @@ class Quote(object):
     """
 
     def __init__(self, data):
-        self.__quote = data['quoteText']
+        # self.__quote = data['quoteText']
+        self.__quote = bytes(data['quoteText'], "utf-8").decode("unicode_escape")
         self.__author = data['quoteAuthor']
         self.__sender_name = data['senderName']
         self.__sender_link = data['senderLink']
@@ -98,10 +99,8 @@ class Forismatic(object):
         if response.status_code == 200:
             # Decoding JSON and fill Quote, if HTTP responce is OK
             try:
-                print(response.json())
                 return Quote(data=response.json())
             except:
-                print(response.json())
                 return Quote(
                     data={
                         "quoteText":"blank",
